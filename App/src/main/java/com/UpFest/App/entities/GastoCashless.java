@@ -6,7 +6,6 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class GastoCashless extends MovimentoCashless {
 
-
     private int quantidade;
     private double valorUnitario;
     @ManyToOne

@@ -10,7 +10,6 @@ public class ProdutoComerciante {
     @Id
     @GeneratedValue
     private Long id;
-
     private String designacao;
     private double valor;
     @ManyToOne
@@ -18,7 +17,7 @@ public class ProdutoComerciante {
     @OneToMany(mappedBy = "produtoComerciante")
     private List<GastoCashless> gastoCashless;
 
-    protected ProdutoComerciante(){
+    protected ProdutoComerciante() {
     }
 
     public ProdutoComerciante(String designacao, double valor) {

@@ -18,15 +18,13 @@ public class Bilhete {
     private Evento evento;
     @ManyToOne
     private SerieBilhetes serieBilhetes;
-
     @ManyToOne
     private Pagamento pagamento;
     @OneToMany(mappedBy = "bilhete")
     private List<Entrada> entrada;
 
 
-
-    protected Bilhete(){
+    protected Bilhete() {
     }
 
     public Bilhete(Long id, String codigo) {

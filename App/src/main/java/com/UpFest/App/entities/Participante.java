@@ -20,9 +20,11 @@ public class Participante {
     private String nome;
     private Date data_registo;
     @OneToMany(mappedBy = "participante")
+    private List<Bilhete> bilhete;
+    @OneToMany(mappedBy = "participante")
     private List<ContaCashless> contaCashless;
 
-    protected Participante(){
+    protected Participante() {
     }
 
     public Participante(Long id, String email, String nome, Date data_registo) {
