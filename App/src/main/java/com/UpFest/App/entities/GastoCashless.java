@@ -4,18 +4,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class GastoCashless extends MovimentoCashless{
+public class GastoCashless extends MovimentoCashless {
 
 
     private int quantidade;
     private double valorUnitario;
     @ManyToOne
-    private MovimentoCashless movimentoCashless;
-    @ManyToOne
     private ProdutoComerciante produtoComerciante;
 
 
-    protected GastoCashless(){
+    protected GastoCashless() {
     }
 
     public GastoCashless(int quantidade, double valorUnitario) {
@@ -37,14 +35,6 @@ public class GastoCashless extends MovimentoCashless{
 
     public void setValorUnitario(double valorUnitario) {
         this.valorUnitario = valorUnitario;
-    }
-
-    public MovimentoCashless getMovimentoCashless() {
-        return movimentoCashless;
-    }
-
-    public void setMovimentoCashless(MovimentoCashless movimentoCashless) {
-        this.movimentoCashless = movimentoCashless;
     }
 
     public ProdutoComerciante getProdutoComerciante() {
