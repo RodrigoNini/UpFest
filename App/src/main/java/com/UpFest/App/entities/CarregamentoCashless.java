@@ -7,11 +7,9 @@ import jakarta.persistence.ManyToOne;
 public class CarregamentoCashless extends MovimentoCashless {
 
     @ManyToOne
-    private MovimentoCashless movimento;
-    @ManyToOne
     private PagamentoCashless pagamento;
 
-    protected CarregamentoCashless(){
+    protected CarregamentoCashless() {
     }
 
 }
