@@ -1,15 +1,12 @@
 package com.UpFest.App.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class SerieBilhetes {
-
     @Id
     @GeneratedValue
     private Long id;
@@ -17,10 +14,13 @@ public class SerieBilhetes {
     private int numero_bilhetes;
     private Date limite_vendas;
     private double custo;
+
+    @OneToMany(mappedBy = "serieBilhetes")
+    private List<Bilhete> bilhete;
     @ManyToOne
     private Evento evento;
 
-    protected SerieBilhetes(){
+    protected SerieBilhetes() {
     }
 
     public SerieBilhetes(Long id, String designacao, int numero_bilhetes, Date limite_vendas, double custo) {

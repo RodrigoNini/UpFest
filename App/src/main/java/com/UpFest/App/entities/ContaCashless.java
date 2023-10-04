@@ -1,9 +1,8 @@
 package com.UpFest.App.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class ContaCashless {
@@ -12,15 +11,20 @@ public class ContaCashless {
     @GeneratedValue
     private Long id;
     private double valor_atual;
+
+    @OneToMany(mappedBy = "contaCashless")
+    private List<MovimentoCashless> movimentoCashlesses;
+    @OneToMany(mappedBy = "contaCashless")
+    private List<PagamentoCashless> pagamentoCashlesses;
     @ManyToOne
     private Participante participante;
     @ManyToOne
     private Evento evento;
 
-    protected ContaCashless(){
+    protected ContaCashless() {
     }
 
-    protected ContaCashless(Long id, double valor_atual, Participante participante,Evento evento) {
+    protected ContaCashless(Long id, double valor_atual, Participante participante, Evento evento) {
         this.id = id;
         this.valor_atual = valor_atual;
         this.participante = participante;

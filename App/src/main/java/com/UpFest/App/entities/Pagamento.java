@@ -17,13 +17,10 @@ public class Pagamento {
     private double valor;
     private Date data_compra;
     private Date data_validado;
-
-    @OneToMany(mappedBy = "pagamento")
-    private List<PagamentoCashless> pagamentoCashless;
     @OneToMany(mappedBy = "pagamento")
     private List<Bilhete> bilhete;
 
-    protected Pagamento(){
+    protected Pagamento() {
     }
 
 

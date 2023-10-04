@@ -12,13 +12,13 @@ public class MovimentoCashless {
     @GeneratedValue
     private Long id;
     private Tipo tipo;
-    @ManyToOne
-    private ContaCashless conta;
     private double valor;
     private double saldo;
     private Date data;
+    @ManyToOne
+    private ContaCashless contaCashless;
 
-    protected MovimentoCashless(){
+    protected MovimentoCashless() {
     }
 
     public MovimentoCashless(Long id, Tipo tipo, double valor, double saldo, Date data) {
@@ -41,18 +41,9 @@ public class MovimentoCashless {
         return tipo;
     }
 
-    public ContaCashless getConta() {
-        return conta;
-    }
-
-    public void setConta(ContaCashless conta) {
-        this.conta = conta;
-    }
-
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
-
 
     public double getValor() {
         return valor;
@@ -76,5 +67,13 @@ public class MovimentoCashless {
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    public ContaCashless getContaCashless() {
+        return contaCashless;
+    }
+
+    public void setContaCashless(ContaCashless contaCashless) {
+        this.contaCashless = contaCashless;
     }
 }
