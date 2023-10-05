@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @Component
 @RequestMapping("/evento")
@@ -20,11 +23,12 @@ public class EventoController {
     @PostMapping("/criar")
     public ResponseEntity<?> addEventoToDB(@RequestBody Evento evento) {
 
-        if (eventoService.addEventoToDB(evento)) {
-            return ResponseEntity.ok("The event '" + evento.getDesignacao() + "' was saved on the BD.");
+        try {
+            Evento eventSaved = eventoService.addEventoToDB(evento);
+            return ResponseEntity.ok("The event '" + eventSaved.getDesignacao() + "' was saved on the BD.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid event name.");
 
     }
 
@@ -40,6 +44,18 @@ public class EventoController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity<?> getEventos() {
+
+        try {
+            List<Evento> eventsFromDB = eventoService.getEventsFromDB();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(eventsFromDB);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
     }
 
 }

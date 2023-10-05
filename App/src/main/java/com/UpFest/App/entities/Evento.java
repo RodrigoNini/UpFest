@@ -108,4 +108,19 @@ public class Evento {
     public void setComerciante(List<Comerciante> comerciante) {
         this.comerciante = comerciante;
     }
+
+    @Override
+    public String toString() {
+        return "Evento{" +
+                "id=" + id +
+                ", designacao='" + designacao + '\'' +
+                ", contaCashless=" + contaCashless +
+                ", bilhete=" + bilhete +
+                ", serieBilhetes=" + serieBilhetes +
+                ", artista=" + artista +
+                ", concerto=" + concerto +
+                ", palco=" + palco +
+                ", comerciante=" + comerciante +
+                '}';
+    }
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,16 +18,16 @@ public class EventoServiceImp implements EventoService {
     EventoRepository eventoRepository;
 
     @Override
-    public boolean addEventoToDB(Evento evento) {
+    public Evento addEventoToDB(Evento evento) throws Exception {
 
+        System.out.println(evento);
         String nameOfEvent = evento.getDesignacao();
 
-        if (nameOfEvent == null) {
-            return false;
+        if (nameOfEvent == null || nameOfEvent.isEmpty()) {
+            throw new Exception("'designacao' of evento can't be empty.");
         }
 
-        Evento eventoSaved = eventoRepository.save(evento);
-        return true;
+        return eventoRepository.save(evento);
     }
 
     @Override
@@ -48,6 +50,18 @@ public class EventoServiceImp implements EventoService {
 
         return eventoRepository.save(eventToSave);
 
+    }
+
+    @Override
+    public List<Evento> getEventsFromDB() throws Exception {
+
+        List<Evento> eventsFromDB = eventoRepository.findAll();
+
+        if (eventsFromDB.isEmpty()) {
+            throw new Exception("No events in the DB.");
+        }
+
+        return eventsFromDB;
     }
 
 }
