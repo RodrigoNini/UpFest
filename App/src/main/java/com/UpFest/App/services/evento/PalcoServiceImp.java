@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -71,5 +72,17 @@ public class PalcoServiceImp implements PalcoService {
         BeanUtils.copyProperties(palcoFromReq, palcoToUpdate, new String[]{"id", "evento"});
 
         return palcoRepository.save(palcoToUpdate);
+    }
+
+    @Override
+    public List<Palco> getPalcosFromDB(Long id_evento) throws Exception {
+
+        List<Palco> palcosFromDB = palcoRepository.findByEventoId(id_evento);
+
+        if (palcosFromDB.isEmpty()) {
+            throw new Exception("No palcos in the DB.");
+        }
+
+        return palcosFromDB;
     }
 }

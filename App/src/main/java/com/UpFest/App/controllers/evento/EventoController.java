@@ -49,7 +49,7 @@ public class EventoController {
 
         try {
             List<Evento> eventsFromDB = eventoService.getEventsFromDB();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(eventsFromDB);
+            return ResponseEntity.status(HttpStatus.OK).body(eventsFromDB);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
