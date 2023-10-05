@@ -6,5 +6,4 @@ public interface EventoService {
 
     boolean addEventoToDB(Evento evento);
 
-
 }
