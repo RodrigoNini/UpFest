@@ -6,4 +6,6 @@ public interface EventoService {
 
     boolean addEventoToDB(Evento evento);
 
+    Evento editEventOnDB(Evento evento) throws Exception;
+
 }
