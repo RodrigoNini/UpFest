@@ -5,6 +5,6 @@ import org.springframework.stereotype.Service;
 
 public interface CashlessService {
 
-    boolean addItem(ProdutoComerciante produtoComerciante);
+
 
 }
