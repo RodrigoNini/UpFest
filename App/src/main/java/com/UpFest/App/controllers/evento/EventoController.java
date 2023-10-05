@@ -38,7 +38,7 @@ public class EventoController {
 
         try {
             Evento eventUpdated = eventoService.editEventOnDB(eventFromReq);
-            return ResponseEntity.ok("The event with ID " + id_evento + " was updated to " + eventFromReq.getDesignacao());
+            return ResponseEntity.ok("The event with ID " + id_evento + " was updated to " + eventUpdated.getDesignacao());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

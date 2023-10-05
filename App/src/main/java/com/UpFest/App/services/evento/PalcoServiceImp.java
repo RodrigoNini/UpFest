@@ -4,9 +4,11 @@ import com.UpFest.App.entities.Evento;
 import com.UpFest.App.entities.Palco;
 import com.UpFest.App.repositories.evento.EventoRepository;
 import com.UpFest.App.repositories.evento.PalcoRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -40,5 +42,34 @@ public class PalcoServiceImp implements PalcoService {
         // set event and save
         palco.setEvento(eventFromReq.get());
         return palcoRepository.save(palco);
+    }
+
+    @Override
+    public Palco editPalcoAtDB(Long id_evento, Long id_palco, Palco palcoFromReq) throws Exception {
+
+        // check if event exists
+        Optional<Evento> eventOnDB = eventoRepository.findById(id_evento);
+
+        if (eventOnDB.isEmpty()) {
+            throw new Exception("Event with ID " + id_evento + " does not exist on the DB");
+        }
+
+        // check if palco exists
+        Optional<Palco> palcoOnDB = palcoRepository.findById(id_palco);
+
+        if (palcoOnDB.isEmpty()) {
+            throw new Exception("Palco with ID " + id_evento + " does not exist on the DB");
+        }
+
+        // check if event and palco match
+        if (!Objects.equals(palcoOnDB.get().getEvento().getId(), id_evento)) {
+            throw new Exception("Event ID and Palco ID don't match.");
+        }
+
+        // update palco on DB
+        Palco palcoToUpdate = palcoOnDB.get();
+        BeanUtils.copyProperties(palcoFromReq, palcoToUpdate, new String[]{"id", "evento"});
+
+        return palcoRepository.save(palcoToUpdate);
     }
 }
