@@ -1,5 +1,6 @@
 package com.UpFest.App.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -25,6 +26,7 @@ public class Evento {
     @OneToMany(mappedBy = "evento")
     private List<Concerto> concerto;
     @OneToMany(mappedBy = "evento")
+    @JsonManagedReference
     private List<Palco> palco;
     @OneToMany(mappedBy = "evento")
     private List<Comerciante> comerciante;
@@ -109,18 +111,4 @@ public class Evento {
         this.comerciante = comerciante;
     }
 
-    @Override
-    public String toString() {
-        return "Evento{" +
-                "id=" + id +
-                ", designacao='" + designacao + '\'' +
-                ", contaCashless=" + contaCashless +
-                ", bilhete=" + bilhete +
-                ", serieBilhetes=" + serieBilhetes +
-                ", artista=" + artista +
-                ", concerto=" + concerto +
-                ", palco=" + palco +
-                ", comerciante=" + comerciante +
-                '}';
-    }
 }

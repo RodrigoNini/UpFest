@@ -1,5 +1,6 @@
 package com.UpFest.App.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class Palco {
     private Long id;
     private String designacao;
     @ManyToOne
+    @JsonBackReference
     private Evento evento;
     @OneToMany(mappedBy = "palco")
     private List<Concerto> concerto;
@@ -55,13 +57,4 @@ public class Palco {
         this.concerto = concerto;
     }
 
-    @Override
-    public String toString() {
-        return "Palco{" +
-                "id=" + id +
-                ", designacao='" + designacao + '\'' +
-                ", evento=" + evento +
-                ", concerto=" + concerto +
-                '}';
-    }
 }
