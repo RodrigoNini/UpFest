@@ -54,4 +54,14 @@ public class Palco {
     public void setConcerto(List<Concerto> concerto) {
         this.concerto = concerto;
     }
+
+    @Override
+    public String toString() {
+        return "Palco{" +
+                "id=" + id +
+                ", designacao='" + designacao + '\'' +
+                ", evento=" + evento +
+                ", concerto=" + concerto +
+                '}';
+    }
 }

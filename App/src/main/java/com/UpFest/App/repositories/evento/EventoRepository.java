@@ -1,4 +1,4 @@
-package com.UpFest.App.repositories;
+package com.UpFest.App.repositories.evento;
 
 import com.UpFest.App.entities.Evento;
 import org.springframework.data.jpa.repository.JpaRepository;

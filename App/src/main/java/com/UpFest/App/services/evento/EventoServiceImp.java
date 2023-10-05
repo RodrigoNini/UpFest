@@ -1,13 +1,11 @@
-package com.UpFest.App.services;
+package com.UpFest.App.services.evento;
 
 import com.UpFest.App.entities.Evento;
-import com.UpFest.App.repositories.EventoRepository;
-import jdk.jfr.Event;
+import com.UpFest.App.repositories.evento.EventoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +18,6 @@ public class EventoServiceImp implements EventoService {
     @Override
     public Evento addEventoToDB(Evento evento) throws Exception {
 
-        System.out.println(evento);
         String nameOfEvent = evento.getDesignacao();
 
         if (nameOfEvent == null || nameOfEvent.isEmpty()) {
