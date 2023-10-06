@@ -5,8 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.util.Date;
+
 
 @Entity
 public class Concerto {
@@ -26,7 +26,7 @@ public class Concerto {
     @ManyToOne
     private Palco palco;
 
-    protected Concerto(){
+    protected Concerto() {
     }
 
     public Concerto(Date dataHoraInicio, Date dataHoraFim) {

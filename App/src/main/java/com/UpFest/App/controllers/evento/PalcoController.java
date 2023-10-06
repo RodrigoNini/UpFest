@@ -1,6 +1,5 @@
 package com.UpFest.App.controllers.evento;
 
-import com.UpFest.App.entities.Evento;
 import com.UpFest.App.entities.Palco;
 import com.UpFest.App.services.evento.PalcoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import java.util.List;
 @RestController
 @Component
 @RequestMapping("/evento")
-public class PalcosController {
+public class PalcoController {
 
     @Autowired
     PalcoService palcoService;
