@@ -1,7 +1,6 @@
 package com.UpFest.App.services.evento;
 
 import com.UpFest.App.entities.Evento;
-import com.UpFest.App.entities.Palco;
 import com.UpFest.App.entities.SerieBilhetes;
 import com.UpFest.App.repositories.evento.EventoRepository;
 import com.UpFest.App.repositories.evento.SerieBilhetesRepository;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -96,5 +96,18 @@ public class SerieBilhetesServiceImp implements SerieBilhetesService {
         BeanUtils.copyProperties(serieBilhetesFromReq, serieBilhetesToUpdate, new String[]{"id", "evento"});
 
         return serieBilhetesRepository.save(serieBilhetesToUpdate);
+    }
+
+    @Override
+    public List<SerieBilhetes> getSerieBilhetesFromDB(Long id_evento) throws Exception {
+
+        List<SerieBilhetes> serieBilhetesFromDB = serieBilhetesRepository.findByEventoId(id_evento);
+
+        if (serieBilhetesFromDB.isEmpty()) {
+            throw new Exception("No SerieBilhetes in the DB.");
+        }
+
+        return serieBilhetesFromDB;
+
     }
 }

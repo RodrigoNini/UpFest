@@ -1,6 +1,5 @@
 package com.UpFest.App.controllers.evento;
 
-import com.UpFest.App.entities.Palco;
 import com.UpFest.App.entities.SerieBilhetes;
 import com.UpFest.App.services.evento.SerieBilhetesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Component
@@ -41,5 +42,16 @@ public class SerieBilhetesController {
 
     }
 
+    @GetMapping("{id_evento}/series_bilhetes/listar")
+    public ResponseEntity<?> getSerieBilhetesAtDB(@PathVariable Long id_evento) {
+
+        try {
+            List<SerieBilhetes> serieBilhetesFromDB = serieBilhetesService.getSerieBilhetesFromDB(id_evento);
+            return ResponseEntity.status(HttpStatus.OK).body(serieBilhetesFromDB);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+    }
 
 }
