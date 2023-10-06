@@ -80,7 +80,7 @@ public class PalcoServiceImp implements PalcoService {
         List<Palco> palcosFromDB = palcoRepository.findByEventoId(id_evento);
 
         if (palcosFromDB.isEmpty()) {
-            throw new Exception("No palcos in the DB.");
+            throw new Exception("No palcos in the DB for this event.");
         }
 
         return palcosFromDB;

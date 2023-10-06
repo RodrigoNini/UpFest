@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Component
 @RequestMapping("/evento")
@@ -34,6 +36,18 @@ public class ArtistaController {
         try {
             Artista artistaUpdated = artistaService.editArtistaAtDB(id_evento, id_artista, artista);
             return ResponseEntity.ok("The Artista '" + artistaUpdated.getNome() + "' was updated to the Event with ID " + id_evento + " on the DB.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/{id_evento}/artistas/listar")
+    public ResponseEntity<?> getArtistasFromDB(@PathVariable Long id_evento) {
+
+        try {
+            List<Artista> artistasFromDB = artistaService.getArtistsFromDB(id_evento);
+            return ResponseEntity.status(HttpStatus.OK).body(artistasFromDB);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

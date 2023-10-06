@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -89,5 +90,17 @@ public class ArtistaServiceImp implements ArtistaService {
         BeanUtils.copyProperties(artistaFromReq, artistaToUpdate, "id", "evento");
 
         return artistaRepository.save(artistaToUpdate);
+    }
+
+    @Override
+    public List<Artista> getArtistsFromDB(Long id_evento) throws Exception {
+
+        List<Artista> artistasFromDB = artistaRepository.findByEventoId(id_evento);
+
+        if (artistasFromDB.isEmpty()) {
+            throw new Exception("No artistas in the DB for this event.");
+        }
+
+        return artistasFromDB;
     }
 }
