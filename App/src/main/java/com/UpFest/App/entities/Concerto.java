@@ -1,5 +1,6 @@
 package com.UpFest.App.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -18,12 +19,15 @@ public class Concerto {
     private Date dataHoraFim;
 
     @ManyToOne
+    @JsonBackReference(value = "evento-concerto")
     private Evento evento;
 
     @ManyToOne
+    @JsonBackReference(value = "artista-concerto")
     private Artista artista;
 
     @ManyToOne
+    @JsonBackReference(value = "palco-concerto")
     private Palco palco;
 
     protected Concerto() {

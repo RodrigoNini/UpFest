@@ -8,6 +8,8 @@ import com.UpFest.App.repositories.evento.PalcoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -47,6 +49,10 @@ public class ConcertoServiceImp implements ConcertoService {
             throw new Exception("O artista com o id " + concertoDTO.getArtista() + " não existe.");
         }
 
+        if (!Objects.equals(artistaFromDTO.get().getEvento().getId(), id_evento)) {
+            throw new Exception("O artista com o ID " + concertoDTO.getArtista() + " não existe no evento com ID " + id_evento);
+        }
+
         //
         // deal with palco
         //
@@ -54,6 +60,10 @@ public class ConcertoServiceImp implements ConcertoService {
 
         if (!palcoFromDTO.isPresent()) {
             throw new Exception("O palco com o id " + concertoDTO.getArtista() + " não existe.");
+        }
+
+        if (!Objects.equals(palcoFromDTO.get().getEvento().getId(), id_evento)) {
+            throw new Exception("O palco com o ID " + concertoDTO.getPalco() + " não existe no evento com ID " + id_evento);
         }
 
         //
@@ -141,6 +151,23 @@ public class ConcertoServiceImp implements ConcertoService {
         concertoToUpdate.setDataHoraFim(concertoDTO.getData_hora_fim());
 
         return concertoRepository.save(concertoToUpdate);
+    }
+
+    @Override
+    public List<ConcertoDTOResponse> getConcertosFromDB(Long id_evento) throws Exception {
+
+        List<Concerto> concertosFromDB = concertoRepository.findByEventoId(id_evento);
+        List<ConcertoDTOResponse> concertoDTOSToSend = new ArrayList<>();
+
+        if (concertosFromDB.isEmpty()) {
+            throw new Exception("No Concertos in the DB for this event.");
+        }
+
+        for (Concerto concerto : concertosFromDB) {
+            concertoDTOSToSend.add(new ConcertoDTOResponse(concerto.getId(), concerto.getArtista().getId(), concerto.getPalco().getId(), concerto.getDataHoraInicio(), concerto.getDataHoraFim()));
+        }
+
+        return concertoDTOSToSend;
     }
 
 

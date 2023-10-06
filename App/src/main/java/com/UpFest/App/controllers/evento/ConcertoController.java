@@ -2,6 +2,7 @@ package com.UpFest.App.controllers.evento;
 
 import com.UpFest.App.entities.Concerto;
 import com.UpFest.App.entities.ConcertoDTO;
+import com.UpFest.App.entities.ConcertoDTOResponse;
 import com.UpFest.App.entities.Palco;
 import com.UpFest.App.services.evento.ConcertoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Component
@@ -39,5 +42,17 @@ public class ConcertoController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    @GetMapping("/{id_evento}/concertos/listar")
+    public ResponseEntity<?> getConcertos(@PathVariable Long id_evento) {
+
+        try {
+            List<ConcertoDTOResponse> concertosFromDB = concertoService.getConcertosFromDB(id_evento);
+            return ResponseEntity.status(HttpStatus.OK).body(concertosFromDB);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
     }
 }
