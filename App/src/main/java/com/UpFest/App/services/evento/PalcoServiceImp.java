@@ -59,7 +59,7 @@ public class PalcoServiceImp implements PalcoService {
         Optional<Palco> palcoOnDB = palcoRepository.findById(id_palco);
 
         if (palcoOnDB.isEmpty()) {
-            throw new Exception("Palco with ID " + id_evento + " does not exist on the DB");
+            throw new Exception("Palco with ID " + id_palco + " does not exist on the DB");
         }
 
         // check if event and palco match

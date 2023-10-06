@@ -79,7 +79,7 @@ public class SerieBilhetesServiceImp implements SerieBilhetesService {
         Optional<SerieBilhetes> serieBilhetesOnDB = serieBilhetesRepository.findById(id_serie);
 
         if (serieBilhetesOnDB.isEmpty()) {
-            throw new Exception("SerieBilhetes with ID " + id_evento + " does not exist on the DB");
+            throw new Exception("SerieBilhetes with ID " + id_serie + " does not exist on the DB");
         }
 
         // check if event and SerieBilhetes match
