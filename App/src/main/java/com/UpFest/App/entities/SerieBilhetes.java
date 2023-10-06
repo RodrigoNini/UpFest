@@ -1,5 +1,6 @@
 package com.UpFest.App.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ public class SerieBilhetes {
     @OneToMany(mappedBy = "serieBilhetes")
     private List<Bilhete> bilhete;
     @ManyToOne
+    @JsonBackReference
     private Evento evento;
 
     protected SerieBilhetes() {
@@ -77,5 +79,18 @@ public class SerieBilhetes {
 
     public void setEvento(Evento evento) {
         this.evento = evento;
+    }
+
+    @Override
+    public String toString() {
+        return "SerieBilhetes{" +
+                "id=" + id +
+                ", designacao='" + designacao + '\'' +
+                ", numero_bilhetes=" + numero_bilhetes +
+                ", limite_vendas=" + limite_vendas +
+                ", custo=" + custo +
+                ", bilhete=" + bilhete +
+                ", evento=" + evento +
+                '}';
     }
 }

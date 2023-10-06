@@ -9,7 +9,7 @@ public class GastoCashless extends MovimentoCashless {
     private int quantidade;
     private double valorUnitario;
     @ManyToOne
-    private ProdutoComerciante produtoComerciante;
+    private Produto produto;
 
 
     protected GastoCashless() {
@@ -36,11 +36,11 @@ public class GastoCashless extends MovimentoCashless {
         this.valorUnitario = valorUnitario;
     }
 
-    public ProdutoComerciante getProdutoComerciante() {
-        return produtoComerciante;
+    public Produto getProdutoComerciante() {
+        return produto;
     }
 
-    public void setProdutoComerciante(ProdutoComerciante produtoComerciante) {
-        this.produtoComerciante = produtoComerciante;
+    public void setProdutoComerciante(Produto produto) {
+        this.produto = produto;
     }
 }
