@@ -1,16 +1,16 @@
 package com.UpFest.App.services.cashless;
 
-import com.UpFest.App.entities.Produto;
+import com.UpFest.App.entities.ProdutoComerciante;
 import java.util.List;
 
 public interface ProdutoService {
 
 
-    Produto addProduto(Long id_evento, Long id_comerciante , Produto produto) throws Exception;
+    ProdutoComerciante addProduto(Long id_evento, Long id_comerciante , ProdutoComerciante produtoComerciante) throws Exception;
 
-    Produto editProduto(Long id_evento, Long id_comerciante, Long id_produto, Produto produto) throws Exception;
+    ProdutoComerciante editProduto(Long id_evento, Long id_comerciante, Long id_produto, ProdutoComerciante produtoComerciante) throws Exception;
 
-    List<Produto> listProdutos(Long id_evento, Long id_comerciante) throws Exception;
+    List<ProdutoComerciante> listProdutos(Long id_evento, Long id_comerciante) throws Exception;
 
 
 

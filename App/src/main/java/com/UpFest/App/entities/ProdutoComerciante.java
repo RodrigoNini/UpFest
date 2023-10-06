@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-public class Produto {
+public class ProdutoComerciante {
 
     @Id
     @GeneratedValue
@@ -17,10 +17,10 @@ public class Produto {
     @OneToMany(mappedBy = "produtoComerciante")
     private List<GastoCashless> gastoCashless;
 
-    protected Produto() {
+    protected ProdutoComerciante() {
     }
 
-    public Produto(String designacao, double valor) {
+    public ProdutoComerciante(String designacao, double valor) {
         this.designacao = designacao;
         this.valor = valor;
     }
