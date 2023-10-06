@@ -80,4 +80,17 @@ public class SerieBilhetes {
     public void setEvento(Evento evento) {
         this.evento = evento;
     }
+
+    @Override
+    public String toString() {
+        return "SerieBilhetes{" +
+                "id=" + id +
+                ", designacao='" + designacao + '\'' +
+                ", numero_bilhetes=" + numero_bilhetes +
+                ", limite_vendas=" + limite_vendas +
+                ", custo=" + custo +
+                ", bilhete=" + bilhete +
+                ", evento=" + evento +
+                '}';
+    }
 }

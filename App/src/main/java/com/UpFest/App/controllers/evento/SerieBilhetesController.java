@@ -28,4 +28,18 @@ public class SerieBilhetesController {
         }
 
     }
+
+    @PostMapping("{id_evento}/series_bilhetes/{id_serie}/editar")
+    public ResponseEntity<?> editSerieBilhetesAtDB(@PathVariable Long id_evento, @PathVariable Long id_serie, @RequestBody SerieBilhetes serieBilhetes) {
+
+        try {
+            SerieBilhetes serieBilhetesUpdated = serieBilhetesService.editSerieBilhetesAtDB(id_evento, id_serie, serieBilhetes);
+            return ResponseEntity.ok("The SerieBilhetes with ID'" + serieBilhetesUpdated.getId() + "' was updated on the Event with ID " + id_evento + " on the DB.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+    }
+
+
 }
