@@ -59,7 +59,7 @@ public class PalcoServiceImp implements PalcoService {
         Optional<Palco> palcoOnDB = palcoRepository.findById(id_palco);
 
         if (palcoOnDB.isEmpty()) {
-            throw new Exception("Palco with ID " + id_evento + " does not exist on the DB");
+            throw new Exception("Palco with ID " + id_palco + " does not exist on the DB");
         }
 
         // check if event and palco match
@@ -80,7 +80,7 @@ public class PalcoServiceImp implements PalcoService {
         List<Palco> palcosFromDB = palcoRepository.findByEventoId(id_evento);
 
         if (palcosFromDB.isEmpty()) {
-            throw new Exception("No palcos in the DB.");
+            throw new Exception("No palcos in the DB for this event.");
         }
 
         return palcosFromDB;

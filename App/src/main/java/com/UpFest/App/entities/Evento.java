@@ -23,6 +23,7 @@ public class Evento {
     @JsonManagedReference
     private List<SerieBilhetes> serieBilhetes;
     @OneToMany(mappedBy = "evento")
+    @JsonManagedReference
     private List<Artista> artista;
     @OneToMany(mappedBy = "evento")
     private List<Concerto> concerto;
