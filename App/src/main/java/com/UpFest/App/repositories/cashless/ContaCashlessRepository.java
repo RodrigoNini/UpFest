@@ -1,4 +1,4 @@
-package com.UpFest.App.repositories;
+package com.UpFest.App.repositories.cashless;
 
 import com.UpFest.App.entities.ContaCashless;
 import org.springframework.data.jpa.repository.JpaRepository;

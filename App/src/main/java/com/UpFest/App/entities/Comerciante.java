@@ -14,7 +14,7 @@ public class Comerciante {
     @ManyToOne
     private Evento evento;
     @OneToMany(mappedBy = "comerciante")
-    private List<ProdutoComerciante> produtoComerciante;
+    private List<Produto> produto;
 
     protected Comerciante(){
     }
@@ -47,11 +47,11 @@ public class Comerciante {
         this.evento = evento;
     }
 
-    public List<ProdutoComerciante> getProdutoComerciante() {
-        return produtoComerciante;
+    public List<Produto> getProdutoComerciante() {
+        return produto;
     }
 
-    public void setProdutoComerciante(List<ProdutoComerciante> produtoComerciante) {
-        this.produtoComerciante = produtoComerciante;
+    public void setProdutoComerciante(List<Produto> produto) {
+        this.produto = produto;
     }
 }
