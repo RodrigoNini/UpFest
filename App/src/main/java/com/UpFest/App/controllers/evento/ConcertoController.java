@@ -29,4 +29,15 @@ public class ConcertoController {
         }
 
     }
+
+    @PostMapping("/{id_evento}/concertos/{id_concerto}/editar")
+    public ResponseEntity<?> editConcertoAtDB(@PathVariable Long id_evento, @PathVariable Long id_concerto, @RequestBody ConcertoDTO concertoDTO) {
+
+        try {
+            Concerto concertoUpdated = concertoService.editConcertoAtDB(id_evento, id_concerto, concertoDTO);
+            return ResponseEntity.ok("The Concerto for the Artist '" + concertoUpdated.getArtista().getNome() + "' at the Palco '" + concertoUpdated.getPalco().getDesignacao() + "' was updated on the Event with ID " + id_evento + " on the DB.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }
