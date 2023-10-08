@@ -1,4 +1,4 @@
-package com.UpFest.App.controllers;
+package com.UpFest.App.controllers.cashless;
 
 import com.UpFest.App.entities.Comerciante;
 import com.UpFest.App.services.cashless.ComercianteServiceImp;
@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @Component
 @RequestMapping("/cashless")
-public class CashlessController {
+public class ComercianteController {
 
     @Autowired
     private ProdutoServiceImp produtoComercianteService;
@@ -41,6 +41,22 @@ public class CashlessController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
 
+    @PostMapping("/{id_evento}/comerciantes/{id_comerciante}/editar")
+    public ResponseEntity<?> editComerciante(@PathVariable Long id_evento, @PathVariable Long id_comerciante, @RequestBody Comerciante comerciante) {
+
+        try {
+            Comerciante comercianteEditado = comercianteService.editComerciante(id_evento, id_comerciante, comerciante);
+            return ResponseEntity.status(HttpStatus.OK).body(comercianteEditado);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{id_evento}/registarcompra")
+    public ResponseEntity<?> registarCompra(@PathVariable Long id_evento){
+
+        return null;
     }
 }

@@ -59,5 +59,10 @@ public class ComercianteServiceImp implements ComercianteService {
         return comerciantes;
     }
 
+    @Override
+    public Comerciante registarCompra(Long id_evento) {
+        return null;
+    }
+
 
 }

@@ -1,4 +1,4 @@
-package com.UpFest.App.controllers.produto;
+package com.UpFest.App.controllers.cashless;
 
 import com.UpFest.App.entities.ProdutoComerciante;
 import com.UpFest.App.services.cashless.ProdutoServiceImp;
