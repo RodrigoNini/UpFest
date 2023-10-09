@@ -19,7 +19,7 @@ public class SerieBilhetes {
     @OneToMany(mappedBy = "serieBilhetes")
     private List<Bilhete> bilhete;
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value="evento-serieBilhetes")
     private Evento evento;
 
     protected SerieBilhetes() {

@@ -1,6 +1,7 @@
 package com.UpFest.App.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,10 +18,11 @@ public class Artista {
     private String biografia;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "evento-artista")
     private Evento evento;
 
     @OneToMany(mappedBy = "artista")
+    @JsonManagedReference(value = "artista-concerto")
     private List<Concerto> concerto;
 
     protected Artista(){

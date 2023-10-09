@@ -20,15 +20,16 @@ public class Evento {
     @OneToMany(mappedBy = "evento")
     private List<Bilhete> bilhete;
     @OneToMany(mappedBy = "evento")
-    @JsonManagedReference
+    @JsonManagedReference(value="evento-serieBilhetes")
     private List<SerieBilhetes> serieBilhetes;
     @OneToMany(mappedBy = "evento")
-    @JsonManagedReference
+    @JsonManagedReference(value = "evento-artista")
     private List<Artista> artista;
     @OneToMany(mappedBy = "evento")
+    @JsonManagedReference(value = "evento-concerto")
     private List<Concerto> concerto;
     @OneToMany(mappedBy = "evento")
-    @JsonManagedReference
+    @JsonManagedReference(value = "evento-palco")
     private List<Palco> palco;
     @OneToMany(mappedBy = "evento")
     private List<Comerciante> comerciante;

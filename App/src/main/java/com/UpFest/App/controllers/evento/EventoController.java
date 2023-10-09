@@ -21,6 +21,8 @@ public class EventoController {
     @PostMapping("/criar")
     public ResponseEntity<?> addEventoToDB(@RequestBody Evento evento) {
 
+        System.out.println(evento);
+
         try {
             Evento eventSaved = eventoService.addEventoToDB(evento);
             return ResponseEntity.ok("The event '" + eventSaved.getDesignacao() + "' was saved on the BD.");
