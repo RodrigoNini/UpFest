@@ -29,8 +29,10 @@ public class VendasController {
     @PostMapping("/bilhetes/comprar")
     public ResponseEntity<?> comprarBilhete(@RequestBody BilheteDTO bilheteDTO) {
 
+        System.out.println(bilheteDTO);
+
         try {
-            Bilhete bilhete = bilheteService.comprarBilhete(bilheteDTO.getId(), bilheteDTO.getNome(), bilheteDTO.getEmail(), bilheteDTO.getSerie());
+            Bilhete bilhete = bilheteService.comprarBilhete(bilheteDTO.getEvento(), bilheteDTO.getNome(), bilheteDTO.getEmail(), bilheteDTO.getSerie());
             return ResponseEntity.ok("O bilhete para o evento '" + bilhete.getEvento().getId() + "' teve sua compra adicionada à BD com o ID bilhete: " + bilhete.getId() + ".");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

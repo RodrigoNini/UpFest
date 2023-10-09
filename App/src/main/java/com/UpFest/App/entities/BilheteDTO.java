@@ -1,24 +1,24 @@
 package com.UpFest.App.entities;
 
 public class BilheteDTO {
-    private Long id;
+    private Long evento;
     private String nome;
     private String email;
     private Long serie;
 
-    public BilheteDTO(Long id, String nome, String email, Long serie) {
-        this.id = id;
+    public BilheteDTO(Long evento, String nome, String email, Long serie) {
+        this.evento = evento;
         this.nome = nome;
         this.email = email;
         this.serie = serie;
     }
 
-    public Long getId() {
-        return id;
+    public Long getEvento() {
+        return evento;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEvento(Long evento) {
+        this.evento = evento;
     }
 
     public String getNome() {
