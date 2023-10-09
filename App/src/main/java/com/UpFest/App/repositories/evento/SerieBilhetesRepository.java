@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface SerieBilhetesRepository extends JpaRepository<SerieBilhetes, Long> {
     List<SerieBilhetes> findByEventoId(Long id_evento);
+
+    // int findByNumero_bilhetes(int numero_bilhetes);
 }

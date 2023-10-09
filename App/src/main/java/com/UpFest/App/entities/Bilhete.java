@@ -27,8 +27,7 @@ public class Bilhete {
     protected Bilhete() {
     }
 
-    public Bilhete(Long id, String codigo) {
-        this.id = id;
+    public Bilhete(String codigo) {
         this.codigo = codigo;
     }
 
@@ -46,5 +45,45 @@ public class Bilhete {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public Participante getParticipante() {
+        return participante;
+    }
+
+    public void setParticipante(Participante participante) {
+        this.participante = participante;
+    }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
+
+    public SerieBilhetes getSerieBilhetes() {
+        return serieBilhetes;
+    }
+
+    public void setSerieBilhetes(SerieBilhetes serieBilhetes) {
+        this.serieBilhetes = serieBilhetes;
+    }
+
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
+    }
+
+    public List<Entrada> getEntrada() {
+        return entrada;
+    }
+
+    public void setEntrada(List<Entrada> entrada) {
+        this.entrada = entrada;
     }
 }
