@@ -1,9 +1,12 @@
 package com.UpFest.App.controllers.cashless;
 
 import com.UpFest.App.entities.Comerciante;
-import com.UpFest.App.services.cashless.ComercianteServiceImp;
+import com.UpFest.App.entities.CompraDTO;
+import com.UpFest.App.entities.GastoCashless;
+import com.UpFest.App.services.cashless.ComercianteService;
 
-import com.UpFest.App.services.cashless.ProdutoServiceImp;
+
+import com.UpFest.App.services.cashless.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +21,10 @@ import java.util.List;
 public class ComercianteController {
 
     @Autowired
-    private ProdutoServiceImp produtoComercianteService;
+    private ProdutoService produtoComercianteService;
     @Autowired
-    private ComercianteServiceImp comercianteService;
+    private ComercianteService comercianteService;
+
 
 
     @PostMapping("{id_evento}/comerciantes/criar")
@@ -45,7 +49,6 @@ public class ComercianteController {
 
     @PostMapping("/{id_evento}/comerciantes/{id_comerciante}/editar")
     public ResponseEntity<?> editComerciante(@PathVariable Long id_evento, @PathVariable Long id_comerciante, @RequestBody Comerciante comerciante) {
-
         try {
             Comerciante comercianteEditado = comercianteService.editComerciante(id_evento, id_comerciante, comerciante);
             return ResponseEntity.status(HttpStatus.OK).body(comercianteEditado);
@@ -55,8 +58,12 @@ public class ComercianteController {
     }
 
     @PostMapping("/{id_evento}/registarcompra")
-    public ResponseEntity<?> registarCompra(@PathVariable Long id_evento){
-
-        return null;
+    public ResponseEntity<?> registarCompra(@PathVariable Long id_evento, @RequestBody CompraDTO compraDTO) {
+        try {
+            GastoCashless gastoCashless = comercianteService.registarCompra(id_evento, compraDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(gastoCashless);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

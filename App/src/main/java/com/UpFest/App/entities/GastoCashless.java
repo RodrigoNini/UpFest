@@ -1,5 +1,7 @@
 package com.UpFest.App.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
@@ -9,6 +11,7 @@ public class GastoCashless extends MovimentoCashless {
     private int quantidade;
     private double valorUnitario;
     @ManyToOne
+    @JsonBackReference(value = "produtoComerciante-gastoCashless")
     private ProdutoComerciante produtoComerciante;
 
 
@@ -42,5 +45,14 @@ public class GastoCashless extends MovimentoCashless {
 
     public void setProdutoComerciante(ProdutoComerciante produtoComerciante) {
         this.produtoComerciante = produtoComerciante;
+    }
+
+    @Override
+    public String toString() {
+        return "GastoCashless{" +
+                "quantidade=" + quantidade +
+                ", valorUnitario=" + valorUnitario +
+                ", produtoComerciante=" + produtoComerciante +
+                '}';
     }
 }

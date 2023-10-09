@@ -3,7 +3,7 @@ package com.UpFest.App.services.cashless;
 import com.UpFest.App.entities.Comerciante;
 import com.UpFest.App.entities.ProdutoComerciante;
 import com.UpFest.App.repositories.cashless.ComercianteRepository;
-import com.UpFest.App.repositories.cashless.ProdutoRepository;
+import com.UpFest.App.repositories.cashless.ProdutoComercianteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +18,14 @@ public class ProdutoServiceImp implements ProdutoService {
     ComercianteRepository comercianteRepository;
 
     @Autowired
-    ProdutoRepository produtoRepository;
+    ProdutoComercianteRepository produtoComercianteRepository;
 
 
     @Override
     public ProdutoComerciante addProduto(Long id_evento, Long id_comerciante, ProdutoComerciante produtoComerciante) throws Exception {
 
         Optional<Comerciante> comercianteOnDB = comercianteRepository.findById(id_comerciante);
-        Optional<ProdutoComerciante> produtoOnDB = produtoRepository.findById(id_comerciante);
+        Optional<ProdutoComerciante> produtoOnDB = produtoComercianteRepository.findById(id_comerciante);
 
         if (produtoOnDB.isPresent()) {
             throw new Exception("Produto com o ID " + id_comerciante + " já existe.");
@@ -46,7 +46,7 @@ public class ProdutoServiceImp implements ProdutoService {
 
         produtoComerciante.setComerciante(comercianteOnDB.get());
 
-        return produtoRepository.save(produtoComerciante);
+        return produtoComercianteRepository.save(produtoComerciante);
 
     }
 
@@ -54,7 +54,7 @@ public class ProdutoServiceImp implements ProdutoService {
     public ProdutoComerciante editProduto(Long id_evento, Long id_comerciante, Long id_produto, ProdutoComerciante produtoComerciante) throws Exception {
 
         Optional<Comerciante> comercianteOnDB = comercianteRepository.findById(id_comerciante);
-        Optional<ProdutoComerciante> produtoOnDB = produtoRepository.findById(id_produto);
+        Optional<ProdutoComerciante> produtoOnDB = produtoComercianteRepository.findById(id_produto);
 
         if(!comercianteOnDB.isPresent()){
             throw new Exception("O Comerciante com o ID " + id_comerciante + " não existe.");
@@ -76,7 +76,7 @@ public class ProdutoServiceImp implements ProdutoService {
         produtoComerciante.setId(id_produto);
         produtoComerciante.setComerciante(comercianteOnDB.get());
 
-        return produtoRepository.save(produtoComerciante);
+        return produtoComercianteRepository.save(produtoComerciante);
 
     }
 
@@ -92,7 +92,7 @@ public class ProdutoServiceImp implements ProdutoService {
             throw new Exception("O evento com o ID " + id_evento + " não existe.");
         }
 
-        List<ProdutoComerciante> produtoComerciantes = produtoRepository.findByComercianteId(comercianteOnDB.get().getId());
+        List<ProdutoComerciante> produtoComerciantes = produtoComercianteRepository.findByComercianteId(comercianteOnDB.get().getId());
 
         return produtoComerciantes;
     }

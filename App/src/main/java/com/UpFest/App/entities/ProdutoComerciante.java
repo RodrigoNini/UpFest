@@ -1,5 +1,7 @@
 package com.UpFest.App.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -13,8 +15,10 @@ public class ProdutoComerciante {
     private String designacao;
     private double valor;
     @ManyToOne
+    @JsonBackReference(value = "comerciante-produtoComerciante")
     private Comerciante comerciante;
     @OneToMany(mappedBy = "produtoComerciante")
+    @JsonManagedReference(value = "produtoComerciante-gastoCashless")
     private List<GastoCashless> gastoCashless;
 
     protected ProdutoComerciante() {
@@ -64,4 +68,5 @@ public class ProdutoComerciante {
     public void setGastoCashless(List<GastoCashless> gastoCashless) {
         this.gastoCashless = gastoCashless;
     }
+
 }

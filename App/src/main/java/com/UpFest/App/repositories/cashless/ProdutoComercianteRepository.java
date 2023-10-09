@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProdutoRepository extends JpaRepository<ProdutoComerciante, Long> {
+public interface ProdutoComercianteRepository extends JpaRepository<ProdutoComerciante, Long> {
     List<ProdutoComerciante> findByComercianteId(Long id_comerciante);
 }

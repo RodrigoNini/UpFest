@@ -1,5 +1,6 @@
 package com.UpFest.App.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class Comerciante {
     @ManyToOne
     private Evento evento;
     @OneToMany(mappedBy = "comerciante")
+    @JsonManagedReference(value="comerciante-produtoComerciante")
     private List<ProdutoComerciante> produtoComerciante;
 
     protected Comerciante(){
