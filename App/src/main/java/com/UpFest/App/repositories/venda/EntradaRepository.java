@@ -1,14 +1,13 @@
 package com.UpFest.App.repositories.venda;
 
 import com.UpFest.App.entities.Bilhete;
+import com.UpFest.App.entities.Entrada;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface BilheteRepository extends JpaRepository<Bilhete, Long> {
-
-    Optional<Bilhete> findByCodigo(String codigo);
-//    Optional<Bilhete> findByPagamento(Long pagamento);
+public interface EntradaRepository extends JpaRepository<Entrada, Long> {
+    Optional<Bilhete> findByBilhete(Bilhete bilhete);
 }

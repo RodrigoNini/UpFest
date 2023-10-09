@@ -4,12 +4,19 @@ import com.UpFest.App.entities.*;
 import com.UpFest.App.repositories.evento.EventoRepository;
 import com.UpFest.App.repositories.evento.SerieBilhetesRepository;
 import com.UpFest.App.repositories.venda.BilheteRepository;
+import com.UpFest.App.repositories.venda.EntradaRepository;
 import com.UpFest.App.repositories.venda.ParticipanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class BilheteServiceImp implements BilheteService {
@@ -22,10 +29,12 @@ public class BilheteServiceImp implements BilheteService {
     ParticipanteRepository participanteRepository;
     @Autowired
     EventoRepository eventoRepository;
+    @Autowired
+    EntradaRepository entradaRepository;
 
 
     @Override
-    public Bilhete comprarBilhete(Long id_bilhete, String nome, String email, Long id_serieBilhetes) throws Exception {
+    public Bilhete comprarBilhete(Long id_evento, String nome, String email, Long id_serieBilhetes) throws Exception {
         // 1. Validar se ainda existem bilhetes disponíveis nessa série
         SerieBilhetes serie = serieBilhetesRepository.findById(id_serieBilhetes).orElse(null);
         if (serie == null || serie.getNumero_bilhetes() <= 0) {
@@ -35,7 +44,6 @@ public class BilheteServiceImp implements BilheteService {
         // 2. Verificar se já existe algum participante com esse e-mail
         Optional<Participante> participanteOptional = participanteRepository.findByEmail(email);
         Participante participante;
-
         if (participanteOptional.isPresent()) {
             participante = participanteOptional.get();
         } else {
@@ -47,10 +55,14 @@ public class BilheteServiceImp implements BilheteService {
         // 3. Gerar uma referência de pagamento
         int referencia = gerarReferenciaPagamento();
 
-        // 4. Criar um bilhete sem código de entrada
+        // 4. Buscar evento
+        Optional<Evento> eventoBD = eventoRepository.findById(id_evento);
+
+        // 5. Criar um bilhete sem código de entrada
         Bilhete bilhete = new Bilhete( null);
         bilhete.setParticipante(participante);
         bilhete.setSerieBilhetes(serie);
+        bilhete.setEvento(eventoBD.get());
         bilheteRepository.save(bilhete);
 
         // Atualizar a série de bilhetes
@@ -83,34 +95,28 @@ public class BilheteServiceImp implements BilheteService {
             throw new Exception("Bilhete inválido ou não foi pago.");
         }
 
-//        // 2. Validar se não foi já registada uma entrada no evento nesse dia, para esse bilhete
-//        boolean entradaRegistrada = entradaRepository.existsByEventoAndBilheteAndData(id_evento, bilhete, LocalDate.now());
-//        if (entradaRegistrada) {
-//            throw new Exception("Entrada já registrada para este bilhete hoje.");
-//        }
-//
-//        // 3. Registar a entrada no evento
-//        Entrada entrada = new Entrada();
-//        entrada.setEvento(eventoRepository.findById(id_evento).orElse(null));
-//        entrada.setBilhete(bilhete);
-//        entrada.setData(LocalDate.now());
-//        entradaRepository.save(entrada);
+        // 2. Validar se não foi já registada uma entrada no evento nesse dia, para esse bilhete
+        Optional<Entrada> entradaOptional = entradaRepository.findById(bilhete.getId());
+        if (entradaOptional.isPresent()) {
+            throw new Exception("Entrada já registrada para este bilhete.");
+        } else {
+            // 3. Registar a entrada no evento
+            Entrada entrada = new Entrada(null, null);
+            entrada.setBilhete(bilhete);
+            entrada.setData(LocalDate.now());
+            entrada.setHora(Time.valueOf(LocalTime.now())); // Obtém a hora atual
+
+            entradaRepository.save(entrada);
+        }
 
         return bilhete;
     }
 
-//          COMPRAR
-//        "Permite a um utilizador adquirir um bilhete. Enviando o nome, o e-mail, e a série de bilhetes que quer adquirir, o servidor: " +
-//            "1. Deverá validar se ainda existem bilhetes disponíveis nessa série, e se essa série ainda está disponível para venda; " +
-//            "2. Verificar se já existe algum participante com esse e-mail e criar caso não exista, guardando também o nome do participante " +
-//            "3. Deverá gerar uma referência de pagamento " +
-//            "4. Deverá criar um bilhete, sem código de entrada, uma vez que ainda não foi pago."
+    @Override
+    public List<Participante> listarParticipante(Long id_evento) throws Exception {
 
-//          VALIDAR ENTRADA
-//        "A ser utilizado pela organização do evento para validar a entrada de um participante. " +
-//        "Deverá receber o código do bilhete gerado no momento em que o bilhete foi pago. " +
-//            "1. Validar se o bilhete existe e foi pago; " +
-//            "2. Validar se não foi já registada uma entrada no evento nesse dia, para esse bilhete; " +
-//            "3. Registar a entrada no evento."
+        return null;
+    }
+
 
 }

@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Entrada {
@@ -14,7 +14,7 @@ public class Entrada {
     @Id
     @GeneratedValue
     private Long id;
-    private Date data;
+    private LocalDate data;
     private Time hora;
 
     @ManyToOne
@@ -23,8 +23,7 @@ public class Entrada {
     protected Entrada(){
     }
 
-    public Entrada(Long id, Date data, Time hora) {
-        this.id = id;
+    public Entrada(LocalDate data, Time hora) {
         this.data = data;
         this.hora = hora;
     }
@@ -37,11 +36,11 @@ public class Entrada {
         this.id = id;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 

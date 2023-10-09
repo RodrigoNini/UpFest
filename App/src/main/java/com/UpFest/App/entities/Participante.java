@@ -27,7 +27,7 @@ public class Participante {
     protected Participante() {
     }
 
-    public Participante( String email, String nome, Date data_registo) {
+    public Participante(String email, String nome, Date data_registo) {
         this.email = email;
         this.nome = nome;
         this.data_registo = data_registo;

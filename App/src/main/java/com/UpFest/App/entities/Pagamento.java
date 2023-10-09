@@ -24,8 +24,7 @@ public class Pagamento {
     }
 
 
-    public Pagamento(Long id, int entidade, int referencia, double valor, Date data_compra, Date data_validado) {
-        this.id = id;
+    public Pagamento(int entidade, int referencia, double valor, Date data_compra, Date data_validado) {
         this.entidade = entidade;
         this.referencia = referencia;
         this.valor = valor;

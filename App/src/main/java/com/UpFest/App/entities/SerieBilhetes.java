@@ -25,8 +25,7 @@ public class SerieBilhetes {
     protected SerieBilhetes() {
     }
 
-    public SerieBilhetes(Long id, String designacao, int numero_bilhetes, Date limite_vendas, double custo) {
-        this.id = id;
+    public SerieBilhetes(String designacao, int numero_bilhetes, Date limite_vendas, double custo) {
         this.designacao = designacao;
         this.numero_bilhetes = numero_bilhetes;
         this.limite_vendas = limite_vendas;
