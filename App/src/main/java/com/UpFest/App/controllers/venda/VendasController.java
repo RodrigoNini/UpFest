@@ -28,6 +28,11 @@ public class VendasController {
 
     @PostMapping("/bilhetes/comprar")
     public ResponseEntity<?> comprarBilhete(@RequestBody Map<String, Object> requestBody) {
+
+
+        System.out.println("teste:" + requestBody);
+
+
         // Obter os valores do corpo da requisição
         Long id_evento = Long.parseLong(requestBody.get("id_evento").toString());
         String nome = requestBody.get("nome").toString();

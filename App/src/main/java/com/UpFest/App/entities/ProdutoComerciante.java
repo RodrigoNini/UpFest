@@ -14,7 +14,7 @@ public class ProdutoComerciante {
     private double valor;
     @ManyToOne
     private Comerciante comerciante;
-    @OneToMany(mappedBy = "produto")
+    @OneToMany(mappedBy = "produtoComerciante")
     private List<GastoCashless> gastoCashless;
 
     protected ProdutoComerciante() {

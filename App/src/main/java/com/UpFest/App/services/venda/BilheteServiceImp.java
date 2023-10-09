@@ -40,7 +40,7 @@ public class BilheteServiceImp implements BilheteService {
             participante = participanteOptional.get();
         } else {
             // Se não existe, criamos um novo participante
-            participante = new Participante(null, email, nome, new Date());
+            participante = new Participante(email, nome, new Date());
             participanteRepository.save(participante);
         }
 
@@ -48,7 +48,7 @@ public class BilheteServiceImp implements BilheteService {
         int referencia = gerarReferenciaPagamento();
 
         // 4. Criar um bilhete sem código de entrada
-        Bilhete bilhete = new Bilhete(null, null);
+        Bilhete bilhete = new Bilhete( null);
         bilhete.setParticipante(participante);
         bilhete.setSerieBilhetes(serie);
         bilheteRepository.save(bilhete);

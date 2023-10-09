@@ -27,8 +27,7 @@ public class Bilhete {
     protected Bilhete() {
     }
 
-    public Bilhete(Long id, String codigo) {
-        this.id = id;
+    public Bilhete(String codigo) {
         this.codigo = codigo;
     }
 
