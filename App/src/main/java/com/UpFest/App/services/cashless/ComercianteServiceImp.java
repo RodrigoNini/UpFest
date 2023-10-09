@@ -98,6 +98,7 @@ public class ComercianteServiceImp implements ComercianteService {
         }
 
         GastoCashless gastoCashless = new GastoCashless(compraDTO.getQuantidade(), produtoFromDTO.get().getValor(), contaFromDTO.getValor_atual());
+        gastoCashless.setContaCashless(contaFromDTO);
         contaFromDTO.setValor_atual(gastoCashless.getSaldo());
 
         return gastoCashlessRepository.save(gastoCashless);
