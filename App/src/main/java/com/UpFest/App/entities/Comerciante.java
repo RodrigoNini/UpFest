@@ -1,5 +1,6 @@
 package com.UpFest.App.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -13,6 +14,7 @@ public class Comerciante {
     private Long id;
     private String designacao;
     @ManyToOne
+    @JsonBackReference(value = "evento-comerciante")
     private Evento evento;
     @OneToMany(mappedBy = "comerciante")
     @JsonManagedReference(value="comerciante-produtoComerciante")
