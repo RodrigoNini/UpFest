@@ -1,9 +1,9 @@
 package com.UpFest.App.services.venda;
 
 import com.UpFest.App.entities.Bilhete;
+import com.UpFest.App.entities.Pagamento;
 import com.UpFest.App.entities.Participante;
 
-import java.util.Date;
 import java.util.List;
 
 public interface BilheteService {

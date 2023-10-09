@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @Component
@@ -29,8 +30,6 @@ public class VendasController {
     @PostMapping("/bilhetes/comprar")
     public ResponseEntity<?> comprarBilhete(@RequestBody BilheteDTO bilheteDTO) {
 
-        System.out.println(bilheteDTO);
-
         try {
             Bilhete bilhete = bilheteService.comprarBilhete(bilheteDTO.getEvento(), bilheteDTO.getNome(), bilheteDTO.getEmail(), bilheteDTO.getSerie());
             return ResponseEntity.ok("O bilhete para o evento '" + bilhete.getEvento().getId() + "' teve sua compra adicionada à BD com o ID bilhete: " + bilhete.getId() + ".");
@@ -40,24 +39,34 @@ public class VendasController {
     }
 
     @PostMapping("/bilhetes/validar_entrada")
-    public ResponseEntity<?> validarBilhete(@RequestBody Map<String, Object> requestBody) {
-
-        // Obter valores do corpo da requisição
-        Long id_evento = Long.parseLong(requestBody.get("id_evento").toString());
-        String codigo = requestBody.get("codigo").toString();
+    public ResponseEntity<?> validarBilhete(@RequestBody ValidarDTO validarDTO) {
 
         try {
-            Bilhete bilhete = bilheteService.validarBilhete(id_evento, codigo);
-            return ResponseEntity.ok("O bilhete para o evento '" + bilhete.getEvento() + "' teve seu registo de entrada efetuado.");
+            Bilhete bilhete = bilheteService.validarBilhete(validarDTO.getEvento(), validarDTO.getCodigo());
+            return ResponseEntity.ok("O bilhete para o evento '" + bilhete.getEvento().getDesignacao() + "' teve seu registo de entrada efetuado.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
-@GetMapping("/participantes/listar")
-public ResponseEntity<?> listarParticipante(@RequestParam Long id_evento) {
-    return null;
-}
+    @GetMapping("/participantes/listar")
+    public ResponseEntity<?> listarParticipante(@RequestParam Long id_evento) {
+        return null;
+    }
+
+    @PostMapping("/pagamentos/validar")
+    public ResponseEntity<?> validarPagamento(@RequestBody Pagamento pagamento) {
+        int pagamentoEntidade = pagamento.getEntidade();
+        int pagamentoReferencia = pagamento.getReferencia();
+        double pagamentoValor = pagamento.getValor();
+
+        try {
+            Pagamento pagamentoValidado = pagamentoService.validarPagamento(pagamentoEntidade, pagamentoReferencia, pagamentoValor);
+            return ResponseEntity.ok("Pagamento validado");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 
 
 }

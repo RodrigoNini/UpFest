@@ -1,20 +1,43 @@
 package com.UpFest.App.services.venda;
 
+import com.UpFest.App.entities.Bilhete;
 import com.UpFest.App.entities.Pagamento;
+import com.UpFest.App.repositories.venda.BilheteRepository;
 import com.UpFest.App.repositories.venda.PagamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PagamentoServiceImp implements PagamentoService {
 
     @Autowired
     PagamentoRepository pagamentoRepository;
+    @Autowired
+    BilheteRepository bilheteRepository;
     @Override
-    public Pagamento validarPagamento(Long entidade, Long referencia, Long valor) throws Exception {
-        return null;
+    public Pagamento validarPagamento(int entidade, int referencia, double valor) throws Exception {
+        Optional<Pagamento> pagamentoOptional = pagamentoRepository.findByEntidadeAndReferenciaAndValor(entidade, referencia, valor);
+        if (!pagamentoOptional.isPresent()) {
+            throw new Exception("Pagamento não encontrado ou não existe.");
+        }
+        if (pagamentoOptional.get().getData_validado() != null) {
+            throw new Exception("Pagamento já validado.");
+        }
+        Optional<Bilhete> bilhetePago = bilheteRepository.findByPagamentoId(pagamentoOptional.get().getId());
+        if (!bilhetePago.isPresent()) {
+            throw new Exception("Erro: deverá ser utilizado o endpoint /cashless/validar_pagamento");
+        }
+        if (bilhetePago.get().getCodigo()==null) {
+            bilhetePago.get().setCodigo("FOEMFOND");
+            bilheteRepository.save(bilhetePago.get());
+        }
+        pagamentoOptional.get().setData_validado(new Date());
+
+        return pagamentoRepository.save(pagamentoOptional.get());
     }
 
     @Override

@@ -17,5 +17,7 @@ public class ParticipanteServiceImp implements ParticipanteService{
     public List<Participante> getParticipanteToDB(Long id_evento) throws Exception {
         return null;
     }
+
+
 //    "Lista os participantes inscritos no evento que fizeram o pagamento, e se já deram entrada no evento ou não."
 }

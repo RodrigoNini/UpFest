@@ -5,6 +5,7 @@ import com.UpFest.App.repositories.evento.EventoRepository;
 import com.UpFest.App.repositories.evento.SerieBilhetesRepository;
 import com.UpFest.App.repositories.venda.BilheteRepository;
 import com.UpFest.App.repositories.venda.EntradaRepository;
+import com.UpFest.App.repositories.venda.PagamentoRepository;
 import com.UpFest.App.repositories.venda.ParticipanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,8 @@ public class BilheteServiceImp implements BilheteService {
     EventoRepository eventoRepository;
     @Autowired
     EntradaRepository entradaRepository;
+    @Autowired
+    PagamentoRepository pagamentoRepository;
 
 
     @Override
@@ -53,16 +56,22 @@ public class BilheteServiceImp implements BilheteService {
         }
 
         // 3. Gerar uma referência de pagamento
-        int referencia = gerarReferenciaPagamento();
+        int referencia = 12345643;
 
-        // 4. Buscar evento
+        // 4. Criar pagamento
+        Pagamento pagamento = new Pagamento(12345,12345643, serie.getCusto(), new Date(),null);
+        pagamentoRepository.save(pagamento);
+
+        // 5. Buscar evento
         Optional<Evento> eventoBD = eventoRepository.findById(id_evento);
 
-        // 5. Criar um bilhete sem código de entrada
+        // 6. Criar um bilhete sem código de entrada
+
         Bilhete bilhete = new Bilhete( null);
         bilhete.setParticipante(participante);
         bilhete.setSerieBilhetes(serie);
         bilhete.setEvento(eventoBD.get());
+        bilhete.setPagamento(pagamento);
         bilheteRepository.save(bilhete);
 
         // Atualizar a série de bilhetes
@@ -98,7 +107,7 @@ public class BilheteServiceImp implements BilheteService {
         // 2. Validar se não foi já registada uma entrada no evento nesse dia, para esse bilhete
         Optional<Entrada> entradaOptional = entradaRepository.findById(bilhete.getId());
         if (entradaOptional.isPresent()) {
-            throw new Exception("Entrada já registrada para este bilhete.");
+            throw new Exception("Entrada já registada para este bilhete.");
         } else {
             // 3. Registar a entrada no evento
             Entrada entrada = new Entrada(null, null);
@@ -117,6 +126,5 @@ public class BilheteServiceImp implements BilheteService {
 
         return null;
     }
-
 
 }

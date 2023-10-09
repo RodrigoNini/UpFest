@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface BilheteRepository extends JpaRepository<Bilhete, Long> {
 
     Optional<Bilhete> findByCodigo(String codigo);
-//    Optional<Bilhete> findByPagamento(Long pagamento);
+    Optional<Bilhete> findByPagamentoId(Long id);
 }
