@@ -1,9 +1,15 @@
 package com.UpFest.App.entities;
 
+import com.UpFest.App.enumerados.Tipo;
+import com.UpFest.App.repositories.cashless.ContaCashlessRepository;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 @Entity
 public class GastoCashless extends MovimentoCashless {
@@ -14,12 +20,15 @@ public class GastoCashless extends MovimentoCashless {
     @JsonBackReference(value = "produtoComerciante-gastoCashless")
     private ProdutoComerciante produtoComerciante;
 
+
     protected GastoCashless() {
     }
 
-    public GastoCashless(int quantidade, double valorUnitario) {
-        this.quantidade = quantidade;
+    public GastoCashless(int quantidade, double valorUnitario, double saldo) {
+
+        super(Tipo.GASTO, quantidade * valorUnitario, saldo - (quantidade * valorUnitario), new Date());
         this.valorUnitario = valorUnitario;
+        this.quantidade = quantidade;
     }
 
     public int getQuantidade() {

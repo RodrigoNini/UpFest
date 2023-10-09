@@ -25,11 +25,6 @@ public class ProdutoServiceImp implements ProdutoService {
     public ProdutoComerciante addProduto(Long id_evento, Long id_comerciante, ProdutoComerciante produtoComerciante) throws Exception {
 
         Optional<Comerciante> comercianteOnDB = comercianteRepository.findById(id_comerciante);
-        Optional<ProdutoComerciante> produtoOnDB = produtoComercianteRepository.findById(id_comerciante);
-
-        if (produtoOnDB.isPresent()) {
-            throw new Exception("Produto com o ID " + id_comerciante + " já existe.");
-        }
 
         String nameOfProduto = produtoComerciante.getDesignacao();
         if(nameOfProduto == null || nameOfProduto.isEmpty()){

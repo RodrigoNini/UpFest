@@ -2,10 +2,12 @@ package com.UpFest.App.services.cashless;
 
 import com.UpFest.App.entities.*;
 import com.UpFest.App.repositories.cashless.ComercianteRepository;
+import com.UpFest.App.repositories.cashless.ContaCashlessRepository;
 import com.UpFest.App.repositories.cashless.GastoCashlessRepository;
 import com.UpFest.App.repositories.cashless.ProdutoComercianteRepository;
 import com.UpFest.App.repositories.evento.EventoRepository;
 import com.UpFest.App.repositories.venda.ParticipanteRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,8 @@ public class ComercianteServiceImp implements ComercianteService {
     ProdutoComercianteRepository produtoComercianteRepository;
     @Autowired
     GastoCashlessRepository gastoCashlessRepository;
+    @Autowired
+    ContaCashlessRepository contaCashlessRepository;
 
     @Override
     public Comerciante addComerciante(Long id_evento, Comerciante comerciante) {
@@ -54,10 +58,9 @@ public class ComercianteServiceImp implements ComercianteService {
                 throw new Exception("O evento com o ID " + id_evento + " não existe.");
             }
 
-            comerciante.setId(id_comerciante);
-            comerciante.setEvento(comercianteOnDB.get().getEvento());
-
-            return comercianteRepository.save(comerciante);
+            Comerciante comercianteToUpdate = comercianteOnDB.get();
+            BeanUtils.copyProperties(comerciante, comercianteToUpdate, "id", "evento", "produtoComerciante");
+            return comercianteRepository.save(comercianteToUpdate);
     }
 
 
@@ -79,6 +82,8 @@ public class ComercianteServiceImp implements ComercianteService {
 
         Optional<Participante> participanteFromDTO = participanteRepository.findByEmail(compraDTO.getParticipante());
         Optional<ProdutoComerciante> produtoFromDTO = produtoComercianteRepository.findById(compraDTO.getProduto());
+        Long id_participante = participanteFromDTO.get().getId();
+        ContaCashless contaFromDTO = contaCashlessRepository.findByParticipanteId(id_participante);
 
         if (!participanteFromDTO.isPresent()) {
             throw new Exception("O participante com o id " + compraDTO.getParticipante() + " não existe.");
@@ -88,7 +93,12 @@ public class ComercianteServiceImp implements ComercianteService {
             throw new Exception("O produto com o id " + compraDTO.getProduto() + " não existe.");
         }
 
-        GastoCashless gastoCashless = new GastoCashless(compraDTO.getQuantidade(), produtoFromDTO.get().getValor());
+        if(contaFromDTO.getValor_atual() <= 0){
+            throw new Exception("O participante com o id " + compraDTO.getParticipante() + " não tem saldo suficiente.");
+        }
+
+        GastoCashless gastoCashless = new GastoCashless(compraDTO.getQuantidade(), produtoFromDTO.get().getValor(), contaFromDTO.getValor_atual());
+        contaFromDTO.setValor_atual(gastoCashless.getSaldo());
 
         return gastoCashlessRepository.save(gastoCashless);
     }

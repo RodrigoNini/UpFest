@@ -28,11 +28,14 @@ public class ComercianteController {
 
 
     @PostMapping("{id_evento}/comerciantes/criar")
-    public void addComerciante(@PathVariable Long id_evento, @RequestBody com.UpFest.App.entities.Comerciante comerciante){
-        comercianteService.addComerciante(id_evento, comerciante);
+    public ResponseEntity<?> addComerciante(@PathVariable Long id_evento, @RequestBody com.UpFest.App.entities.Comerciante comerciante){
+        try {
+            Comerciante comercianteCriado = comercianteService.addComerciante(id_evento, comerciante);
+            return ResponseEntity.ok("O comerciante '" + comercianteCriado.getDesignacao() + "' foi adicionado ao evento com o ID " + id_evento + " na base de dados.");
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-
-
 
 
 
@@ -57,7 +60,7 @@ public class ComercianteController {
         }
     }
 
-    @PostMapping("/{id_evento}/registarcompra")
+    @PostMapping("/{id_evento}/registar_compra")
     public ResponseEntity<?> registarCompra(@PathVariable Long id_evento, @RequestBody CompraDTO compraDTO) {
         try {
             GastoCashless gastoCashless = comercianteService.registarCompra(id_evento, compraDTO);

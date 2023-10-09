@@ -21,8 +21,7 @@ public class MovimentoCashless {
     protected MovimentoCashless() {
     }
 
-    public MovimentoCashless(Long id, Tipo tipo, double valor, double saldo, Date data) {
-        this.id = id;
+    public MovimentoCashless(Tipo tipo, double valor, double saldo, Date data) {
         this.tipo = tipo;
         this.valor = valor;
         this.saldo = saldo;
