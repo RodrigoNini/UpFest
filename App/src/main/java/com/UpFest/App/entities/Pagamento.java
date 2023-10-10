@@ -18,9 +18,8 @@ public class Pagamento {
     private double valor;
     private Date data_compra;
     private Date data_validado;
-    @OneToMany(mappedBy = "pagamento")
-    @JsonManagedReference(value = "pagamento-bilhete")
-    private List<Bilhete> bilhete;
+    @ManyToOne
+    private Bilhete bilhete;
 
     protected Pagamento() {
     }
@@ -81,5 +80,13 @@ public class Pagamento {
 
     public void setData_validado(Date data_validado) {
         this.data_validado = data_validado;
+    }
+
+    public Bilhete getBilhete() {
+        return bilhete;
+    }
+
+    public void setBilhete(Bilhete bilhete) {
+        this.bilhete = bilhete;
     }
 }

@@ -20,12 +20,15 @@ public class Bilhete {
     @ManyToOne
     @JsonBackReference(value = "evento-bilhete")
     private Evento evento;
+
+
+
     @ManyToOne
     @JsonBackReference(value = "seriebilhetes-bilhete")
     private SerieBilhetes serieBilhetes;
-    @ManyToOne
+    @OneToMany(mappedBy = "bilhete")
     @JsonBackReference(value = "pagamento-bilhete")
-    private Pagamento pagamento;
+    private List<Pagamento> pagamentos;
     @OneToMany(mappedBy = "bilhete")
     @JsonManagedReference(value="bilhete-entrada")
     private List<Entrada> entrada;
@@ -53,6 +56,13 @@ public class Bilhete {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+    public List<Pagamento> getPagamentos() {
+        return pagamentos;
+    }
+
+    public void setPagamentos(List<Pagamento> pagamentos) {
+        this.pagamentos = pagamentos;
+    }
 
     public Participante getParticipante() {
         return participante;
@@ -76,14 +86,6 @@ public class Bilhete {
 
     public void setSerieBilhetes(SerieBilhetes serieBilhetes) {
         this.serieBilhetes = serieBilhetes;
-    }
-
-    public Pagamento getPagamento() {
-        return pagamento;
-    }
-
-    public void setPagamento(Pagamento pagamento) {
-        this.pagamento = pagamento;
     }
 
     public List<Entrada> getEntrada() {

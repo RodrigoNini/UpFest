@@ -1,7 +1,6 @@
 package com.UpFest.App.services.venda;
 
 import com.UpFest.App.entities.*;
-import com.UpFest.App.repositories.cashless.ContaCashlessRepository;
 import com.UpFest.App.repositories.evento.EventoRepository;
 import com.UpFest.App.repositories.evento.SerieBilhetesRepository;
 import com.UpFest.App.repositories.venda.BilheteRepository;
@@ -17,14 +16,11 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class BilheteServiceImp implements BilheteService {
-
-    private Random random = new Random();
 
     @Autowired
     BilheteRepository bilheteRepository;
@@ -38,8 +34,6 @@ public class BilheteServiceImp implements BilheteService {
     EntradaRepository entradaRepository;
     @Autowired
     PagamentoRepository pagamentoRepository;
-    @Autowired
-    ContaCashlessRepository contaCashlessRepository;
 
 
     @Override
@@ -61,12 +55,11 @@ public class BilheteServiceImp implements BilheteService {
             participanteRepository.save(participante);
         }
 
+        // 3. Gerar uma referência de pagamento
+        int referencia = 12345643;
 
         // 4. Criar pagamento
-
-        int entidade = (10000 + random.nextInt(90000)); // Gera números de 5 dígitos
-        int referencia = (10000 + random.nextInt(90000)); // Gera números de 5 dígitos
-        Pagamento pagamento = new Pagamento(12345,1234567894, serie.getCusto(), new Date(), null );
+        Pagamento pagamento = new Pagamento(12345,12345643, serie.getCusto(), new Date(),null);
         pagamentoRepository.save(pagamento);
 
         // 5. Buscar evento
@@ -84,10 +77,6 @@ public class BilheteServiceImp implements BilheteService {
         // Atualizar a série de bilhetes
         serie.setNumero_bilhetes(serie.getNumero_bilhetes() - 1);
         serieBilhetesRepository.save(serie);
-        Optional<ContaCashless> contaCashless = contaCashlessRepository.findByParticipanteId(participante.getId());
-        if(!contaCashless.isPresent()){
-            contaCashlessRepository.save(contaCashless.get());
-        }
 
         return bilhete;
     }

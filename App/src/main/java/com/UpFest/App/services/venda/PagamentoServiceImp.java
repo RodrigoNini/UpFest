@@ -34,13 +34,10 @@ public class PagamentoServiceImp implements PagamentoService {
         if (pagamentoOptional.get().getData_validado() != null) {
             throw new Exception("Pagamento já validado.");
         }
-        Optional<Bilhete> bilhetePago = bilheteRepository.findByPagamentoId(pagamentoOptional.get().getId());
-        if (!bilhetePago.isPresent()) {
-            throw new Exception("Erro: deverá ser utilizado o endpoint /cashless/validar_pagamento");
-        }
-        if (bilhetePago.get().getCodigo() == null) {
-            bilhetePago.get().setCodigo("FOEMFOND");
-            bilheteRepository.save(bilhetePago.get());
+        Bilhete bilhetePago = pagamentoOptional.get().getBilhete();
+        if (bilhetePago.getCodigo() == null) {
+            bilhetePago.setCodigo("FOEMFOND");
+            bilheteRepository.save(bilhetePago);
         }
         pagamentoOptional.get().setData_validado(new Date());
 
@@ -48,41 +45,21 @@ public class PagamentoServiceImp implements PagamentoService {
     }
 
     @Override
-    public List<Pagamento> pagamentosParticipante(String participante) throws Exception {
-        List<Pagamento> pagamentosToSend = new ArrayList<>();
-
-        // pagamento bilhete
-        Optional<Participante> participanteFromReq = participanteRepository.findByEmail(participante);
-
-        Optional<Bilhete> bilheteFromParticipante = bilheteRepository.findByParticipanteId(participanteFromReq.get().getId());
-
-        Optional<Pagamento> pagamentoFromParticipante = pagamentoRepository.findById(bilheteFromParticipante.get().getPagamento().getId());
-
-        pagamentosToSend.add(pagamentoFromParticipante.get());
-
-        // pagamentos cashless
-
-        // Optional<ContaCashless> contaCashlessFromParticipante = contaCashlessRepository.findByParticipanteId(participanteFromReq.get().getId());
-        // pagamentosToSend.addAll(contaCashlessFromParticipante.get().getPagamentoCashlesses());
-
-
-        return pagamentosToSend;
+    public List<Pagamento> pagamentosParticipante(String email) throws Exception {
+        return pagamentoRepository.findByBilheteParticipanteEmail(email);
 
     }
 
     @Override
     public List<Pagamento> getPagamentoToDB(String email) throws Exception {
 
-//        Pagamento pagamento = pagamentoRepository.findById(pagamento).get();
-//        List<Pagamento> pagamentoFromDB = pagamentoRepository.findByPagamento(pagamento);
-//        if (pagamentoFromDB.isEmpty()) {
-//            throw new Exception("Participante não está no evento.");
-//        }
-        //Optional<Pagamento> participantePagamento = pagamentoRepository.findByData(data_validado);
+        List<Pagamento> pagamento = pagamentoRepository.findByBilheteParticipanteEmail(email);
+         //pagamentoFromDB = pagamentoRepository.findByPagamento(pagamento);
+        if (pagamento.isEmpty()) {
+            throw new Exception("Pagamento.");
+        }
 
-
-        return null;
-//        pagamentoFromDB;
+        return pagamento;
     }
 
 
