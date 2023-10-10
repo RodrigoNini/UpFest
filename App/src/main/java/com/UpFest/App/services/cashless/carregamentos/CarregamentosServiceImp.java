@@ -1,8 +1,10 @@
 package com.UpFest.App.services.cashless.carregamentos;
 
+import com.UpFest.App.entities.CarregamentoCashlessDTO;
 import com.UpFest.App.entities.ContaCashless;
 import com.UpFest.App.entities.Evento;
 import com.UpFest.App.entities.Participante;
+import com.UpFest.App.entities.CarregamentoCashlessDTO;
 import com.UpFest.App.repositories.cashless.ContaCashlessRepository;
 import com.UpFest.App.repositories.evento.EventoRepository;
 import com.UpFest.App.repositories.venda.ParticipanteRepository;
@@ -54,5 +56,25 @@ public class CarregamentosServiceImp implements CarregamentosService {
 
         return contaCashlessFromUser.get();
 
+    }
+
+    @Override
+    public ContaCashless carregarSaldo(Long id_evento, CarregamentoCashlessDTO carregamentoCashlessDTO) throws Exception {
+        Optional<Evento> eventoOptional = eventoRepository.findById(id_evento);
+        if (!eventoOptional.isPresent()) {
+            throw new Exception("Evento não encontrado ou não existe.");
+        }
+        Optional<Participante> participanteOptional = participanteRepository.findByEmail(carregamentoCashlessDTO.getEmail());
+        if (!participanteOptional.isPresent()) {
+            throw new Exception("Participante não encontrado ou não existe.");
+        }
+
+        Optional<ContaCashless> contaCashlessOptional = contaCashlessRepository.findById(participanteOptional.get().getId());
+        if (!contaCashlessOptional.isPresent()) {
+            throw new Exception("Conta cashless não encontrada ou não existe.");
+        }
+
+        contaCashlessOptional.get().setValor_atual(contaCashlessOptional.get().getValor_atual() + carregamentoCashlessDTO.getValue());
+        return contaCashlessRepository.save(contaCashlessOptional.get());
     }
 }

@@ -10,11 +10,11 @@ public class CarregamentoCashlessDTO {
         this.value = value;
     }
 
-    public String getUserEmail() {
+    public String getEmail() {
         return userEmail;
     }
 
-    public void setUserEmail(String userEmail) {
+    public void setEmail(String userEmail) {
         this.userEmail = userEmail;
     }
 
