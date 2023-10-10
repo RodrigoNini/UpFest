@@ -13,11 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.rmi.server.ExportException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ParticipanteServiceImp implements ParticipanteService{
+public class ParticipanteServiceImp implements ParticipanteService {
 
     @Autowired
     ParticipanteRepository participanteRepository;
@@ -36,11 +37,16 @@ public class ParticipanteServiceImp implements ParticipanteService{
         if (participanteFromDB.isEmpty()) {
             throw new Exception("Participante não está no evento.");
         }
-        //Optional<Pagamento> participantePagamento = pagamentoRepository.findByData(data_validado);
 
+        List<Participante> participantesWithCode = new ArrayList<>();
+        for (Participante participante : participanteFromDB) {
+                if (participante.getBilhete().get(0).getCodigo() != null) {
+                    participantesWithCode.add(participante);
+                }
+        }
 
-        return participanteFromDB;
-//        participanteFromDB;
+        return participantesWithCode;
+
     }
 
 

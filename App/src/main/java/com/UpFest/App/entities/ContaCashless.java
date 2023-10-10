@@ -29,10 +29,8 @@ public class ContaCashless {
     protected ContaCashless() {
     }
 
-    public ContaCashless(double valor_atual, Participante participante, Evento evento) {
+    public ContaCashless(double valor_atual) {
         this.valor_atual = valor_atual;
-        this.participante = participante;
-        this.evento = evento;
     }
 
     public Long getId() {

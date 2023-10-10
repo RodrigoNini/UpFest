@@ -20,7 +20,6 @@ public class GastoCashless extends MovimentoCashless {
     @JsonBackReference(value = "produtoComerciante-gastoCashless")
     private ProdutoComerciante produtoComerciante;
 
-
     protected GastoCashless() {
     }
 

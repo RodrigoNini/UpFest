@@ -1,6 +1,7 @@
 package com.UpFest.App.services.venda;
 
 import com.UpFest.App.entities.*;
+import com.UpFest.App.repositories.cashless.ContaCashlessRepository;
 import com.UpFest.App.repositories.evento.EventoRepository;
 import com.UpFest.App.repositories.evento.SerieBilhetesRepository;
 import com.UpFest.App.repositories.venda.BilheteRepository;
@@ -34,7 +35,8 @@ public class BilheteServiceImp implements BilheteService {
     EntradaRepository entradaRepository;
     @Autowired
     PagamentoRepository pagamentoRepository;
-
+    @Autowired
+    ContaCashlessRepository contaCashlessRepository;
 
     @Override
     public Bilhete comprarBilhete(Long id_evento, String nome, String email, Long id_serieBilhetes) throws Exception {
@@ -48,28 +50,33 @@ public class BilheteServiceImp implements BilheteService {
         Optional<Participante> participanteOptional = participanteRepository.findByEmail(email);
         Participante participante;
         if (participanteOptional.isPresent()) {
-            participante = participanteOptional.get();
-        } else {
-            // Se não existe, criamos um novo participante
-            participante = new Participante(email, nome, new Date());
-            participanteRepository.save(participante);
+            throw new Exception("Utilizador já existe.");
         }
 
-        // 3. Gerar uma referência de pagamento
-        int referencia = 12345643;
+        // Se não existe, criamos um novo participante
+        participante = new Participante(email, nome, new Date());
+        participanteRepository.save(participante);
 
         // 5. Buscar evento
         Optional<Evento> eventoBD = eventoRepository.findById(id_evento);
 
+        // Criar conta Cashless
+        // default de 20 euros :P
+        ContaCashless contaCashless = new ContaCashless(20);
+        contaCashless.setParticipante(participante);
+        contaCashless.setEvento(eventoBD.get());
+        contaCashlessRepository.save(contaCashless);
+
+
         // 6. Criar um bilhete sem código de entrada
-        Bilhete bilhete = new Bilhete( null);
+        Bilhete bilhete = new Bilhete(null);
         bilhete.setParticipante(participante);
         bilhete.setSerieBilhetes(serie);
         bilhete.setEvento(eventoBD.get());
         bilheteRepository.save(bilhete);
 
         // Criar pagamento
-        Pagamento pagamento = new Pagamento(12345,12345643, serie.getCusto(), new Date(),null);
+        Pagamento pagamento = new Pagamento(12345, 12345643, serie.getCusto(), new Date(), null);
         pagamento.setBilhete(bilhete);
         pagamentoRepository.save(pagamento);
 
@@ -119,7 +126,6 @@ public class BilheteServiceImp implements BilheteService {
 
         return bilhete;
     }
-
 
 
 }
