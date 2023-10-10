@@ -21,8 +21,6 @@ public class Bilhete {
     @JsonBackReference(value = "evento-bilhete")
     private Evento evento;
 
-
-
     @ManyToOne
     @JsonBackReference(value = "seriebilhetes-bilhete")
     private SerieBilhetes serieBilhetes;

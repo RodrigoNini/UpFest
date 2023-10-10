@@ -58,21 +58,20 @@ public class BilheteServiceImp implements BilheteService {
         // 3. Gerar uma referência de pagamento
         int referencia = 12345643;
 
-        // 4. Criar pagamento
-        Pagamento pagamento = new Pagamento(12345,12345643, serie.getCusto(), new Date(),null);
-        pagamentoRepository.save(pagamento);
-
         // 5. Buscar evento
         Optional<Evento> eventoBD = eventoRepository.findById(id_evento);
 
         // 6. Criar um bilhete sem código de entrada
-
         Bilhete bilhete = new Bilhete( null);
         bilhete.setParticipante(participante);
         bilhete.setSerieBilhetes(serie);
         bilhete.setEvento(eventoBD.get());
-        bilhete.setPagamento(pagamento);
         bilheteRepository.save(bilhete);
+
+        // Criar pagamento
+        Pagamento pagamento = new Pagamento(12345,12345643, serie.getCusto(), new Date(),null);
+        pagamento.setBilhete(bilhete);
+        pagamentoRepository.save(pagamento);
 
         // Atualizar a série de bilhetes
         serie.setNumero_bilhetes(serie.getNumero_bilhetes() - 1);
