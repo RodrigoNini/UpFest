@@ -8,10 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @Component
@@ -49,11 +46,6 @@ public class VendasController {
         }
     }
 
-    @GetMapping("/participantes/listar")
-    public ResponseEntity<?> listarParticipante(@RequestParam Long id_evento) {
-        return null;
-    }
-
     @PostMapping("/pagamentos/validar")
     public ResponseEntity<?> validarPagamento(@RequestBody Pagamento pagamento) {
         int pagamentoEntidade = pagamento.getEntidade();
@@ -68,14 +60,25 @@ public class VendasController {
         }
     }
 
+    @GetMapping("/participantes/listar")
+    public List<Participante> listarParticipante(@RequestParam Long evento) {
+        try {
+            return participanteService.getParticipanteToDB(evento);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     @GetMapping("/pagamentos/listar")
-    public ResponseEntity<?> listarPagamentosParticipante(@RequestParam String participante) {
+    public List<Pagamento> listarPagamentosParticipante(@RequestParam String participante) {
 
         try {
-             List<Pagamento> pagamentosParticipante = pagamentoService.pagamentosParticipante(participante);
-            return ResponseEntity.ok(pagamentosParticipante);
+            return pagamentoService.getPagamentoToDB(participante);
+//             List<Pagamento> pagamentosParticipante = pagamentoService.pagamentosParticipante(participante);
+//            return ResponseEntity.ok(pagamentosParticipante);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return null;
         }
 
     }

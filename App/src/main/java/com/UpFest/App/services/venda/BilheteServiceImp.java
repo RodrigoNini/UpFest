@@ -121,10 +121,6 @@ public class BilheteServiceImp implements BilheteService {
         return bilhete;
     }
 
-    @Override
-    public List<Participante> listarParticipante(Long id_evento) throws Exception {
 
-        return null;
-    }
 
 }
