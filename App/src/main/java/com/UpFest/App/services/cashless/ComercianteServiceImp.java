@@ -83,7 +83,7 @@ public class ComercianteServiceImp implements ComercianteService {
         Optional<Participante> participanteFromDTO = participanteRepository.findByEmail(compraDTO.getParticipante());
         Optional<ProdutoComerciante> produtoFromDTO = produtoComercianteRepository.findById(compraDTO.getProduto());
         Long id_participante = participanteFromDTO.get().getId();
-        ContaCashless contaFromDTO = contaCashlessRepository.findByParticipanteId(id_participante);
+        Optional<ContaCashless> contaFromDTO = contaCashlessRepository.findByParticipanteId(id_participante);
 
         if (!participanteFromDTO.isPresent()) {
             throw new Exception("O participante com o id " + compraDTO.getParticipante() + " não existe.");
@@ -93,13 +93,13 @@ public class ComercianteServiceImp implements ComercianteService {
             throw new Exception("O produto com o id " + compraDTO.getProduto() + " não existe.");
         }
 
-        if(contaFromDTO.getValor_atual() <= 0){
+        if(contaFromDTO.get().getValor_atual() <= 0){
             throw new Exception("O participante com o id " + compraDTO.getParticipante() + " não tem saldo suficiente.");
         }
 
-        GastoCashless gastoCashless = new GastoCashless(compraDTO.getQuantidade(), produtoFromDTO.get().getValor(), contaFromDTO.getValor_atual());
-        gastoCashless.setContaCashless(contaFromDTO);
-        contaFromDTO.setValor_atual(gastoCashless.getSaldo());
+        GastoCashless gastoCashless = new GastoCashless(compraDTO.getQuantidade(), produtoFromDTO.get().getValor(), contaFromDTO.get().getValor_atual());
+        gastoCashless.setContaCashless(contaFromDTO.get());
+        contaFromDTO.get().setValor_atual(gastoCashless.getSaldo());
 
         return gastoCashlessRepository.save(gastoCashless);
     }

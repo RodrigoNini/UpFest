@@ -1,5 +1,7 @@
 package com.UpFest.App.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -18,6 +20,7 @@ public class Entrada {
     private Time hora;
 
     @ManyToOne
+    @JsonBackReference(value="bilhete-entrada")
     private Bilhete bilhete;
 
     protected Entrada(){

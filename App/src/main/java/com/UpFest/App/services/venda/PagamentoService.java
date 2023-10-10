@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface PagamentoService {
     Pagamento validarPagamento(int entidade, int referencia, double valor) throws Exception;
+
+    List<Pagamento> pagamentosParticipante(String participante) throws Exception;
+
     List<Pagamento> getPagamentoToDB(String email) throws Exception;
 }

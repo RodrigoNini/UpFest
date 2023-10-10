@@ -68,5 +68,17 @@ public class VendasController {
         }
     }
 
+    @GetMapping("/pagamentos/listar")
+    public ResponseEntity<?> listarPagamentosParticipante(@RequestParam String participante) {
+
+        try {
+             List<Pagamento> pagamentosParticipante = pagamentoService.pagamentosParticipante(participante);
+            return ResponseEntity.ok(pagamentosParticipante);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.UpFest.App.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -13,12 +14,16 @@ public class ContaCashless {
     private double valor_atual;
 
     @OneToMany(mappedBy = "contaCashless")
+    @JsonIgnore
     private List<MovimentoCashless> movimentoCashlesses;
     @OneToMany(mappedBy = "contaCashless")
+    @JsonIgnore
     private List<PagamentoCashless> pagamentoCashlesses;
     @ManyToOne
+    @JsonIgnore
     private Participante participante;
     @ManyToOne
+    @JsonIgnore
     private Evento evento;
 
     protected ContaCashless() {
@@ -44,5 +49,37 @@ public class ContaCashless {
 
     public void setValor_atual(double valor_atual) {
         this.valor_atual = valor_atual;
+    }
+
+    public List<MovimentoCashless> getMovimentoCashlesses() {
+        return movimentoCashlesses;
+    }
+
+    public void setMovimentoCashlesses(List<MovimentoCashless> movimentoCashlesses) {
+        this.movimentoCashlesses = movimentoCashlesses;
+    }
+
+    public List<PagamentoCashless> getPagamentoCashlesses() {
+        return pagamentoCashlesses;
+    }
+
+    public void setPagamentoCashlesses(List<PagamentoCashless> pagamentoCashlesses) {
+        this.pagamentoCashlesses = pagamentoCashlesses;
+    }
+
+    public Participante getParticipante() {
+        return participante;
+    }
+
+    public void setParticipante(Participante participante) {
+        this.participante = participante;
+    }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
     }
 }

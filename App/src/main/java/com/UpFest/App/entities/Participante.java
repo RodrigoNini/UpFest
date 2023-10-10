@@ -64,4 +64,20 @@ public class Participante {
     public void setData_registo(Date data_registo) {
         this.data_registo = data_registo;
     }
+
+    public List<Bilhete> getBilhete() {
+        return bilhete;
+    }
+
+    public void setBilhete(List<Bilhete> bilhete) {
+        this.bilhete = bilhete;
+    }
+
+    public List<ContaCashless> getContaCashless() {
+        return contaCashless;
+    }
+
+    public void setContaCashless(List<ContaCashless> contaCashless) {
+        this.contaCashless = contaCashless;
+    }
 }

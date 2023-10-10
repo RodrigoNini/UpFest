@@ -1,5 +1,6 @@
 package com.UpFest.App.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ public class Pagamento {
     private Date data_compra;
     private Date data_validado;
     @OneToMany(mappedBy = "pagamento")
+    @JsonManagedReference(value = "pagamento-bilhete")
     private List<Bilhete> bilhete;
 
     protected Pagamento() {

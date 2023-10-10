@@ -1,5 +1,7 @@
 package com.UpFest.App.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -13,14 +15,19 @@ public class Bilhete {
     private String codigo;
 
     @ManyToOne
+    @JsonBackReference(value = "participante-bilhete")
     private Participante participante;
     @ManyToOne
+    @JsonBackReference(value = "evento-bilhete")
     private Evento evento;
     @ManyToOne
+    @JsonBackReference(value = "seriebilhetes-bilhete")
     private SerieBilhetes serieBilhetes;
     @ManyToOne
+    @JsonBackReference(value = "pagamento-bilhete")
     private Pagamento pagamento;
     @OneToMany(mappedBy = "bilhete")
+    @JsonManagedReference(value="bilhete-entrada")
     private List<Entrada> entrada;
 
 
